@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "skill": "Java",
+        "level": "Intermediate"
+    },
+    {
+        "skill": "C++",
+        "level": "Advanced"
+    },
+    {
+        "skill": "Python",
+        "level": "Beginner"
+    },
+    {
+        "skill": "JavaScript",
+        "level": "Intermediate"
+    },
+    {
+        "skill": "C#",
+        "level": "Intermediate"
+    }
+]
