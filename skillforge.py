@@ -1,5 +1,3 @@
-# SkillForge - Personal Skill Tracker
-
 import json
 import customtkinter as ctk
 from tkinter import messagebox
@@ -24,29 +22,61 @@ ctk.set_default_color_theme("blue")
 
 app = ctk.CTk()
 app.title("SkillForge - Personal Skill Tracker")
-app.geometry("520x600")
+app.geometry("600x650")
+app.resizable(False, False)
 
-# ----------- Widgets -----------
-skill_entry = ctk.CTkEntry(app, placeholder_text="Skill Name")
-level_option = ctk.CTkOptionMenu(app, values=["Beginner", "Intermediate", "Advanced"])
-filter_option = ctk.CTkOptionMenu(app, values=["All", "Beginner", "Intermediate", "Advanced"], command=lambda level: filter_skills(level))
+# ----------- Frames -----------
+header_frame = ctk.CTkFrame(app)
+form_frame = ctk.CTkFrame(app)
+button_frame = ctk.CTkFrame(app)
+list_frame = ctk.CTkFrame(app)
 
-add_button = ctk.CTkButton(app, text="➕ Add Skill", command=lambda: add_skill())
-update_button = ctk.CTkButton(app, text="✏️ Update Selected", command=lambda: update_skill())
-delete_button = ctk.CTkButton(app, text="🗑 Delete Selected", command=lambda: delete_skill())
-summary_button = ctk.CTkButton(app, text="📊 Show Summary", command=lambda: show_summary())
+header_frame.pack(pady=10)
+form_frame.pack(pady=10, fill="x", padx=20)
+button_frame.pack(pady=10)
+list_frame.pack(pady=10)
 
-skill_listbox = ctk.CTkTextbox(app, width=460, height=250)
+# ----------- Header -----------
+title_label = ctk.CTkLabel(header_frame, text="🛠 SkillForge", font=("Arial", 28, "bold"))
+subtitle_label = ctk.CTkLabel(header_frame, text="Track and grow your skills", font=("Arial", 16))
+title_label.pack()
+subtitle_label.pack()
 
-# ----------- Layout -----------
-skill_entry.pack(pady=10)
-level_option.pack(pady=5)
-filter_option.pack(pady=5)
-add_button.pack(pady=5)
-update_button.pack(pady=5)
-delete_button.pack(pady=5)
-summary_button.pack(pady=5)
-skill_listbox.pack(pady=10)
+# ----------- Form Inputs -----------
+skill_label = ctk.CTkLabel(form_frame, text="Skill Name:")
+skill_entry = ctk.CTkEntry(form_frame, placeholder_text="Enter skill name")
+
+level_label = ctk.CTkLabel(form_frame, text="Skill Level:")
+level_option = ctk.CTkOptionMenu(form_frame, values=["Beginner", "Intermediate", "Advanced"])
+
+filter_label = ctk.CTkLabel(form_frame, text="Filter by Level:")
+filter_option = ctk.CTkOptionMenu(form_frame, values=["All", "Beginner", "Intermediate", "Advanced"], command=lambda level: filter_skills(level))
+
+skill_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
+skill_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+level_label.grid(row=1, column=0, padx=5, pady=5, sticky="w")
+level_option.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+filter_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
+filter_option.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+form_frame.columnconfigure(1, weight=1)
+
+# ----------- Buttons -----------
+add_button = ctk.CTkButton(button_frame, text="➕ Add Skill", width=130, command=lambda: add_skill())
+update_button = ctk.CTkButton(button_frame, text="✏️ Update Selected", width=130, command=lambda: update_skill())
+delete_button = ctk.CTkButton(button_frame, text="🗑 Delete Selected", width=130, command=lambda: delete_skill())
+summary_button = ctk.CTkButton(button_frame, text="📊 Show Summary", width=130, command=lambda: show_summary())
+
+add_button.grid(row=0, column=0, padx=10, pady=5)
+update_button.grid(row=0, column=1, padx=10, pady=5)
+delete_button.grid(row=1, column=0, padx=10, pady=5)
+summary_button.grid(row=1, column=1, padx=10, pady=5)
+
+# ----------- Skill List Display -----------
+list_label = ctk.CTkLabel(list_frame, text="Your Skills", font=("Arial", 16, "bold"))
+skill_listbox = ctk.CTkTextbox(list_frame, width=540, height=250, corner_radius=10)
+
+list_label.pack(pady=5)
+skill_listbox.pack()
 
 # ----------- Core Operations -----------
 def refresh_skills():
